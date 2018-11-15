@@ -92,8 +92,7 @@ public class PeopleResource {
             Callable<String> callable = new Call("https://swapi.co/api/people/", i);
             Future<String> future = executorService.submit(callable);
             list.add(future);
-        }
-        
+        }        
         StringBuilder builder = new StringBuilder();
         builder.append('[');
         for (int i = 0; i < list.size(); i++) {

@@ -81,17 +81,18 @@ public class SpeciesResource {
             Callable<String> callable = new Call("https://swapi.co/api/species/", i);
             Future<String> future = executorService.submit(callable);
             list.add(future);
+        }       
+        StringBuilder builder = new StringBuilder();
+        builder.append('[');
+        for (int i = 0; i < list.size(); i++) {
+         String result = list.get(i).get();  
+         builder.append(result);
+         if(i < list.size() - 1)
+             builder.append(',');
         }
-        List<String> listresult = new ArrayList();
-        for (Future<String> future : list) {
-         listresult.add(future.get());            
-        }
-        StringBuilder listString = new StringBuilder();
         
-        for (String film : listresult) {
-            listString.append(String.valueOf(film));
-        }
-        System.out.println("List" + listString.toString());
-        return listString.toString();
+       builder.append(']');
+        
+       return builder.toString();
     }
 }
