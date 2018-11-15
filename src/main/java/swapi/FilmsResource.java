@@ -119,5 +119,6 @@ public class FilmsResource {
         }
         builder.append(']');
         return builder.toString();
+
     }
 }

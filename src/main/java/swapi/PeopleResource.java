@@ -100,7 +100,6 @@ public class PeopleResource {
             list.add(future);
 
         }
-
         StringBuilder builder = new StringBuilder();
         builder.append('[');
         for (int i = 0; i < list.size(); i++) {
@@ -116,7 +115,6 @@ public class PeopleResource {
         }
         
           if (',' == builder.charAt(builder.length() - 1)) {
-            System.out.println("qxr");
             builder.setLength(builder.length() - 1);
         }
         builder.append(']');

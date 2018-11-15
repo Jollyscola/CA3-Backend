@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package rest;
+package swapi;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -36,6 +36,9 @@ import swapi.ThreadedDownload;
  */
 @Path("planets")
 public class PlanetsResource {
+
+    public PlanetsResource() {
+    }
 
     private class Call implements Callable<String> {
 

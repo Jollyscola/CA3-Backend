@@ -111,10 +111,10 @@ public class VehiclesResource {
 
         }
         if (',' == builder.charAt(builder.length() - 1)) {
-            System.out.println("qxr");
             builder.setLength(builder.length() - 1);
         }
         builder.append(']');
         return builder.toString();
+
     }
 }
