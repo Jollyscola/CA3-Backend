@@ -93,20 +93,19 @@ public class VehiclesResource {
 
         }
 
+        
         StringBuilder builder = new StringBuilder();
         builder.append('[');
         for (int i = 0; i < list.size(); i++) {
             String result = list.get(i).get();
 
             if (result != null) {
-
+                
+                 builder.append(result);
+                 
                 if (i < list.size() - 1) {
-                    builder.append(result);
                     builder.append(',');
-                } else {
-                    builder.append(result);
-                }
-
+                } 
             }
 
         }
