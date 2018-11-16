@@ -7,32 +7,32 @@ import javax.persistence.Persistence;
 
 public class SetupTestUsers {
 
+    //fills up database with user information
+    
   public static void main(String[] args) {
 
     EntityManager em = Persistence.createEntityManagerFactory("persistence").createEntityManager();
-    
-    // IMPORTAAAAAAAAAANT!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-    // This breaks one of the MOST fundamental security rules in that it ships with default users and passwords
-    // CHANGE the three passwords below, before you uncomment and execute the code below
-    
-        
+    //opens the transaction
     em.getTransaction().begin();
+   //creating user and role data for the database 
     Role userRole = new Role("user");
     Role adminRole = new Role("admin");
-    User user = new User("user", "test");
+    User user = new User("kurt", "test");
+    User admin = new User("admin", "test"); 
+    //provides the user with the correct role
     user.addRole(userRole);
-    User admin = new User("admin", "test");
     admin.addRole(adminRole);
-    em.persist(userRole);
+    //persist prepares data to the database
+    em.persist(userRole); 
     em.persist(adminRole);
     em.persist(user);
     em.persist(admin);
+    //commit seals the transaction
     em.getTransaction().commit();
+    
+    //debugging purpose
     System.out.println("PW: " + user.GetPassword());
     System.out.println("Testing user with OK password: " + user.verifyPassword("test"));
-
-
-      // User user = em.find(User.class,"user"); 
     System.out.println("Testing user with wrong password: " + user.verifyPassword("test"));
     System.out.println("Created TEST Users");
    

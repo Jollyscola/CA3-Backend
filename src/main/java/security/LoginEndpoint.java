@@ -16,7 +16,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-
 import javax.ws.rs.Consumes;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -29,7 +28,7 @@ import exceptions.GenericExceptionMapper;
 @Path("login")
 public class LoginEndpoint {
 
-  public static final int TOKEN_EXPIRE_TIME = 1000 * 60 * 30; //30 min
+  public static final int TOKEN_EXPIRE_TIME = 1000 * 60 * 30; //token will last 30 min before expiring
 
   @POST
   @Consumes(MediaType.APPLICATION_JSON)
@@ -40,7 +39,6 @@ public class LoginEndpoint {
     String username = json.get("username").getAsString();
     String password = json.get("password").getAsString();
 
-    //Todo refactor into facade
     try {
       User user = UserFacade.getInstance().getVeryfiedUser(username, password);
       String token = createToken(username, user.getRolesAsStrings());

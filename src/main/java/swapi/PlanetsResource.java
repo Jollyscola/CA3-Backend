@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package swapi;
 
 import java.io.IOException;
@@ -18,22 +13,11 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.UriInfo;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PUT;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
-import swapi.ThreadedDownload;
 
-/**
- * REST Web Service
- *
- * @author Jollys
- */
 @Path("planets")
 public class PlanetsResource {
 
@@ -64,39 +48,56 @@ public class PlanetsResource {
         con.setRequestMethod("GET");
         con.setRequestProperty("Accept", "application/json;charset=UTF-8");
         con.setRequestProperty("User-Agent", "server");
-        Scanner scan = new Scanner(con.getInputStream());
-        String jsonStr = "";
-        if (scan.hasNext()) {
-            jsonStr += scan.nextLine();
+        int code = con.getResponseCode();
+        if (code == 200) {
+            System.out.println("code" + code);
+
+            Scanner scan = new Scanner(con.getInputStream());
+            String jsonStr = "";
+            if (scan.hasNext()) {
+                jsonStr += scan.nextLine();
+            }
+
+            return jsonStr;
+        } else {
+
+            return null;
         }
-        scan.close();
-        return jsonStr;
     }
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    public String getswapiplanets() throws MalformedURLException, IOException, InterruptedException, ExecutionException {
+    public String getswapipeople() throws MalformedURLException, IOException, InterruptedException, ExecutionException {
 
         ExecutorService executorService = Executors.newFixedThreadPool(5);
         List<Future<String>> list = new ArrayList<>();
 
-        //List<String> list = new ArrayList();
-        for (int i = 1; i < 6; i++) {
+        for (int i = 1; i < 10; i++) {
+
             Callable<String> callable = new Call("https://swapi.co/api/planets/", i);
             Future<String> future = executorService.submit(callable);
             list.add(future);
-        }       
+
+        }
+
         StringBuilder builder = new StringBuilder();
         builder.append('[');
         for (int i = 0; i < list.size(); i++) {
-         String result = list.get(i).get();  
-         builder.append(result);
-         if(i < list.size() - 1)
-             builder.append(',');
+            String result = list.get(i).get();
+            if (result != null) {
+
+                builder.append(result);
+                if (i < list.size() - 1) {
+                    builder.append(',');
+                }
+            }
+
         }
-        
-       builder.append(']');
-        
-       return builder.toString();
+
+        if (',' == builder.charAt(builder.length() - 1)) {
+            builder.setLength(builder.length() - 1);
+        }
+        builder.append(']');
+        return builder.toString();
     }
 }

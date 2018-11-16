@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package swapi;
 
 import java.io.IOException;
@@ -22,11 +17,6 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PUT;
 import javax.ws.rs.core.MediaType;
 
-/**
- * REST Web Service
- *
- * @author Jollys
- */
 @Path("unlimited")
 public class UnlimitedResource {
 
@@ -68,9 +58,7 @@ public class UnlimitedResource {
         for (String film : array) {
             listString.append(String.valueOf(film));
         }
-//        String r1 = getSwapiData(1);
-//        String r2 = getSwapiData(2);
-//        String returnString = "[" + r1 + "," + r2 + "]";
+        
         System.out.println("List" + listString.toString());
         
         return listString.toString();
